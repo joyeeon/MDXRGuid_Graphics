@@ -64,7 +64,7 @@ public class cshFollowPollack : MonoBehaviour
         // 흡입 시작 시 효과음 재생
         if (audioSource != null && audioSource.clip != null)
         {
-            AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);
+            AudioSource.PlayClipAtPoint(audioSource.clip, transform.position, 0.5f);
         }
     }
 
