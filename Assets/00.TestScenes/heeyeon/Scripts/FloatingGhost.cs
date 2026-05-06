@@ -12,15 +12,19 @@ public class FloatingGhost : MonoBehaviour
 
     private cshFollowPollack followPollack;
 
+    private Rigidbody rb;
 
-    private Vector3 _startPos;
     private Quaternion _startRot;
+    private float _timeCounter;
 
     private void Start()
     {
-        _startPos = transform.position;
         _startRot = transform.localRotation; // 초기 회전값 저장
         followPollack = GetComponent<cshFollowPollack>();
+        rb = GetComponent<Rigidbody>();
+
+        
+        _timeCounter = Random.Range(0f, 100f);
     }
 
     private void Update()
@@ -31,14 +35,26 @@ public class FloatingGhost : MonoBehaviour
             return;
         }
         // 사인파로 위아래 이동
-        float newY = _startPos.y + Mathf.Sin(Time.time * floatSpeed) * floatHeight;
-        transform.position = new Vector3(_startPos.x, newY, _startPos.z);
+        if (rb != null && rb.isKinematic)
+        {
+            // 잡혀서 이동하는 동안에는 현재 회전값을 기준점으로 계속 갱신해 줍니다.
+            _startRot = transform.localRotation;
+            return;
+        }
 
-        // 2. [변경됨] 사인파로 자연스럽게 좌우 + 기우뚱 회전
-        float sinY = Mathf.Sin(Time.time * yRotationSpeed) * yRotationRange;
-        float sinZ = Mathf.Sin(Time.time * zRotationSpeed) * zRotationRange;
+        _timeCounter += Time.deltaTime;
 
-        // 원래 회전값에 실시간 오프셋(Y, Z)을 곱해 자연스러운 각도 생성
+        // 3. 고정 좌표가 아니라 '수학적 변화량'만 계산해서 현재 위치에 더해줍니다.
+        // 이 방식을 쓰면 손을 놓은 그 자리에서 다시 자연스럽게 둥실둥실 춤을 춥니다.
+        float wave = Mathf.Sin(_timeCounter * floatSpeed) * floatHeight;
+
+        // 위아래 미세한 움직임 적용 (X, Z는 현재 위치 유지)
+        transform.position = new Vector3(transform.position.x, transform.position.y + wave * Time.deltaTime * 10f, transform.position.z);
+
+        // 4. 회전 효과 적용
+        float sinY = Mathf.Sin(_timeCounter * yRotationSpeed) * yRotationRange;
+        float sinZ = Mathf.Sin(_timeCounter * zRotationSpeed) * zRotationRange;
+
         transform.localRotation = _startRot * Quaternion.Euler(0, sinY, sinZ);
     }
 }

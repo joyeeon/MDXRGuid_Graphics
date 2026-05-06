@@ -68,6 +68,7 @@
     <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\FloatingGhost.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Lana Studio\Environment VFX pack\Demo\Scripts\_InputKeyBoard.cs" />
+    <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\InteractionSoundPlayer.cs" />
     <Compile Include="Assets\heeyeon\Scripts\CustomSpawner.cs" />
     <Compile Include="Assets\ObjectDetection\ObjectDetectionBridge.cs" />
   </ItemGroup>
