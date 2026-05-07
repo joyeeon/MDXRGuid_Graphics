@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Meta.XR.BuildingBlocks.AIBlocks::Meta.XR.BuildingBlocks.AIBlocks.UnityInferenceEngineProvider
   supportedInferenceTypes: 4
   mode: 0
-  modelFile: {fileID: 5022602860645237092, guid: 557e545caba084c4199a3ee4e882d032, type: 3}
+  modelFile: {fileID: 5022602860645237092, guid: 2fcd3f4e058c7b74980a6c21a09d5544, type: 3}
   streamingAssetModel: {fileID: 0}
   useStreamingAsset: 0
   streamingAssetFileName: 
@@ -29,7 +29,7 @@ MonoBehaviour:
   inputHeight: 640
   nmsShader: {fileID: 7200000, guid: 28ac39a8e5009184d838d8e8c444bd6d, type: 3}
   maxDetections: 100
-  scoreThreshold: 0.8
+  scoreThreshold: 0.7
   llmConfig:
     inferenceExecutionMode: 1
     stepsPerFrame: 150

@@ -28,7 +28,7 @@ public class CustomSpawner : MonoBehaviour
         {
             MRUK.Instance.RegisterSceneLoadedCallback(() =>
             {
-                _currentType = ContentType.Geobukseon;
+                _currentType = ContentType.Bugeo;
                 switch (SpawnOnStart)
                 {
                     case MRUK.RoomFilter.AllRooms:

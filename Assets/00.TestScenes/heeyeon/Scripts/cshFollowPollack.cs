@@ -15,21 +15,26 @@ public class cshFollowPollack : MonoBehaviour
     public float minScaleRatio = 0f;
 
     private bool isFollow = false;
+    private bool isPreparing = false;     // VFX 켜지고 대기 중인 상태
     public bool IsFollowing => isFollow;
+
     private float currentSpeed;
-
-    //소리
     private AudioSource audioSource;
-
-    // 크기 축소용 상태값
     private Vector3 initialScale;
     private float initialDistance;
+
+
+    public GameObject warningVFX;        // VisualEffect → GameObject로 변경
+    public float vfxToFollowDelay = 3f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         initialScale = transform.localScale;
         audioSource = GetComponent<AudioSource>();
+        // 시작 시 VFX 프리팹 비활성화
+        if (warningVFX != null)
+            warningVFX.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,9 +42,9 @@ public class cshFollowPollack : MonoBehaviour
     {
         if (Pollack == null) return;
 
-        if (!isFollow)
+        if (!isFollow && !isPreparing)
             CheckFacingPollack();
-        else
+        else if (isFollow)
             MoveTowardPollack();
     }
 
@@ -47,25 +52,31 @@ public class cshFollowPollack : MonoBehaviour
     {
         Vector3 toPollack = transform.position - Pollack.position;
 
-        // 거리 체크
         if (toPollack.magnitude > detectionDistance) return;
 
-        // 북어의 forward가 액운을 향하는지 즉, 북어를 기준으로 마주보고 있는지 여부를 내적으로 판정
         float dot = Vector3.Dot(-Pollack.transform.right, toPollack.normalized);
         if (dot < facingThreshold) return;
 
-        currentSpeed = followSpeed;
+        if (warningVFX != null)
+            warningVFX.SetActive(true);
 
-        // 흡입 시작 시점의 거리를 기억해서 축소 비율 계산에 사용
+        isPreparing = true;
+        StartCoroutine(PrepareFollow());
+    }
+
+    private System.Collections.IEnumerator PrepareFollow()
+    {
+        yield return new WaitForSeconds(vfxToFollowDelay);
+
+        currentSpeed = followSpeed;
         initialDistance = Vector3.Distance(transform.position, mouth.position);
         if (initialDistance < 0.0001f) initialDistance = 0.0001f;
 
+        isPreparing = false;
         isFollow = true;
-        // 흡입 시작 시 효과음 재생
+
         if (audioSource != null && audioSource.clip != null)
-        {
             AudioSource.PlayClipAtPoint(audioSource.clip, transform.position, 0.5f);
-        }
     }
 
     void MoveTowardPollack()
@@ -73,28 +84,23 @@ public class cshFollowPollack : MonoBehaviour
         if (mouth == null) { isFollow = false; return; }
 
         float distance = Vector3.Distance(transform.position, mouth.position);
+
         if (distance < arrivalDistance)
         {
-            // 최종 스케일로 스냅
             transform.localScale = initialScale * minScaleRatio;
             OnArrive();
             return;
         }
 
-        // 점점 빨리 빨려들어가도록 가속
         currentSpeed += acceleration * Time.deltaTime;
-
         transform.position = Vector3.MoveTowards(
             transform.position,
             mouth.position,
             currentSpeed * Time.deltaTime
         );
 
-
-        // 액운의 크기를 조절하려면 여기에 코드 추가
-        // 진행도(0 = 시작, 1 = 도착)에 따른 스케일 적용
-        float progress = 1f - Mathf.Clamp01(distance / initialDistance); // 0~1사이의 값으로 조절
-        float curveValue = scaleCurve.Evaluate(progress); // 1 → 0 으로 자연스럽게
+        float progress = 1f - Mathf.Clamp01(distance / initialDistance);
+        float curveValue = scaleCurve.Evaluate(progress);
         float scaleRatio = Mathf.Lerp(minScaleRatio, 1f, curveValue);
         transform.localScale = initialScale * scaleRatio;
     }
@@ -102,7 +108,11 @@ public class cshFollowPollack : MonoBehaviour
     void OnArrive()
     {
         isFollow = false;
-        // 도착 시 동작(충돌처리로 구현하는 가능)
+
+        if (warningVFX != null)
+            warningVFX.SetActive(false);
+
         Destroy(gameObject);
     }
+
 }
