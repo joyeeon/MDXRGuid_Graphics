@@ -25,7 +25,7 @@ public class cshFollowPollack : MonoBehaviour
 
 
     public GameObject warningVFX;        // VisualEffect ¡æ GameObject·Î º¯°æ
-    public float vfxToFollowDelay = 3f;
+    public float vfxToFollowDelay = 1.5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

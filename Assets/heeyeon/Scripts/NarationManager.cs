@@ -26,6 +26,13 @@ public class NarrationManager : MonoBehaviour
     private bool _waitingForSecondClip = false;
     private float _secondClipTimer = 0f;
 
+    public bool IsPlaying => audioSource.isPlaying;
+
+    public void StopNarration()
+    {
+        audioSource?.Stop();
+    }
+
     private void Start()
     {
         if (audioSource == null)
@@ -132,5 +139,19 @@ public class NarrationManager : MonoBehaviour
 
         if (narrationText != null)
             narrationText.gameObject.SetActive(false);
+    }
+
+    // 나레이션 일시정지 (위치 기억)
+    public void PauseNarration()
+    {
+        if (audioSource.isPlaying)
+            audioSource.Pause();
+    }
+
+    // 나레이션 이어서 재생
+    public void ResumeNarration()
+    {
+        if (!audioSource.isPlaying)
+            audioSource.UnPause();
     }
 }
