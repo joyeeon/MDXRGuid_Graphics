@@ -88,7 +88,64 @@ public class CustomSpawner : MonoBehaviour
             return;
         }
 
-        var labelFilter = new LabelFilter(spawnLabels);
+        // Plant 라벨 앵커 찾기
+        MRUKAnchor plantAnchor = null;
+        foreach (var anchor in room.Anchors)
+        {
+            if (anchor.Label.HasFlag(MRUKAnchor.SceneLabels.PLANT))
+            {
+                plantAnchor = anchor;
+                break;
+            }
+        }
+
+        if (plantAnchor == null)
+        {
+            Debug.LogWarning("[CustomSpawner] Plant 앵커를 찾을 수 없습니다.");
+            return;
+        }
+
+        Vector3 spawnPos = plantAnchor.transform.position + Vector3.up * normalOffset;
+        _spawnedInstance = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
+
+        Debug.Log($"[CustomSpawner] 스폰 완료: {_currentType} @ {spawnPos}");
+        Debug.Log($"[CustomSpawner] plantAnchor.transform.rotation: {plantAnchor.transform.rotation}");
+
+        // 텍스트 위치 업데이트
+        if (narrationManager != null)
+        {
+            narrationManager.SetTextPosition(spawnPos, Quaternion.identity);
+        }
+
+        if (_currentType == ContentType.Geobukseon)
+        {
+            GameObject targetChild = null;
+            var allChildren = _spawnedInstance.GetComponentsInChildren<Transform>(true);
+
+            foreach (var child in allChildren)
+            {
+                if (child.name == "GeoBukSeon_Effects")
+                {
+                    targetChild = child.gameObject;
+                    break;
+                }
+            }
+
+            if (targetChild != null)
+            {
+                Debug.Log("[CustomSpawner] GeoBukSeon_Effects 찾기 성공! NarrationManager에 등록합니다.");
+                narrationManager?.SetObjectToActivateAfterFirstClip(targetChild);
+            }
+            else
+            {
+                Debug.LogWarning("[CustomSpawner] 'GeoBukSeon_Effects'라는 이름의 자식을 찾을 수 없습니다. 구조나 이름을 확인하세요.");
+            }
+        }
+
+        narrationManager?.PlayNarration(_currentType);
+
+
+        /*var labelFilter = new LabelFilter(spawnLabels);
         foreach (var anchor in room.Anchors)
         {
             if (!labelFilter.PassesFilter(anchor.Label)) continue;
@@ -134,7 +191,7 @@ public class CustomSpawner : MonoBehaviour
             }
             narrationManager?.PlayNarration(_currentType);
             break;
-        }
+        }*/
     }
 
     public void ClearSpawned()

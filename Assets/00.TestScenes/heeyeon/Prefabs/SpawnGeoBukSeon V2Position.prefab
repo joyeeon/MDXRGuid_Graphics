@@ -14829,7 +14829,7 @@ Transform:
   m_GameObject: {fileID: 1468074570474094997}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.9999997, z: -0, w: 0.00083962106}
-  m_LocalPosition: {x: 0.33, y: 0, z: 0.322}
+  m_LocalPosition: {x: 0.265, y: 0, z: 0.322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15143,12 +15143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bbab929c04c55429df7ee2df1f89e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParticleDirectionControllerPos
-  fireParticleObject: {fileID: 1601266696920628239}
+  lineObject: {fileID: 0}
   shipTransform: {fileID: 3315475768429631187}
-  targetPoint: {fileID: 8866699613498842491}
-  angleThreshold: 5
-  time: 6
-  changed: 0
+  vfxPrefab: {fileID: 0}
+  vfxDuration: 3
   Characters:
   - {fileID: 8158147137194381314}
   - {fileID: 8692101223939501017}
@@ -25364,12 +25362,12 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 3.09
   simulationSpeed: 0.72
-  stopAction: 0
+  stopAction: 1
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -30311,12 +30309,12 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 3.09
   simulationSpeed: 0.72
-  stopAction: 0
+  stopAction: 1
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -60061,12 +60059,12 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 3.09
   simulationSpeed: 0.72
-  stopAction: 0
+  stopAction: 1
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -65076,12 +65074,12 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 3.09
   simulationSpeed: 0.72
-  stopAction: 0
+  stopAction: 1
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -85037,12 +85035,12 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 3.09
   simulationSpeed: 0.72
-  stopAction: 0
+  stopAction: 1
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -94929,12 +94927,12 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 3.09
   simulationSpeed: 0.72
-  stopAction: 0
+  stopAction: 1
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -99786,12 +99784,12 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 3.09
   simulationSpeed: 0.72
-  stopAction: 0
+  stopAction: 1
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -109936,6 +109934,14 @@ PrefabInstance:
       value: Explosion4_air
       objectReference: {fileID: 0}
     - target: {fileID: 2708111118001001053, guid: cc1acab8f41acb641b36420a6b27155d, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2708111118001001053, guid: cc1acab8f41acb641b36420a6b27155d, type: 3}
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2708111118001001053, guid: cc1acab8f41acb641b36420a6b27155d, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
@@ -110147,6 +110153,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 198252407347076760, guid: 10c010e679890e243beafa574f44a31a, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198252407347076760, guid: 10c010e679890e243beafa574f44a31a, type: 3}
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198252407347076760, guid: 10c010e679890e243beafa574f44a31a, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
@@ -110257,6 +110271,14 @@ PrefabInstance:
     - target: {fileID: 2020094977426093719, guid: cc1acab8f41acb641b36420a6b27155d, type: 3}
       propertyPath: m_Name
       value: Explosion4_air (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2708111118001001053, guid: cc1acab8f41acb641b36420a6b27155d, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2708111118001001053, guid: cc1acab8f41acb641b36420a6b27155d, type: 3}
+      propertyPath: stopAction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2708111118001001053, guid: cc1acab8f41acb641b36420a6b27155d, type: 3}
       propertyPath: playOnAwake
