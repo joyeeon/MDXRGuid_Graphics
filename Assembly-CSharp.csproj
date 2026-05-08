@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{BC4BC164-35B2-B2E9-8226-FADCA13C1DBA}</ProjectGuid>
+    <ProjectGuid>{98294DE6-BB9A-E57F-5C6F-86BE535C0FC9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -62,7 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\heeyeon\Scripts\NarationManager.cs" />
+    <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\PollackVFXManager.cs" />
     <Compile Include="Assets\Lana Studio\Environment VFX pack\Demo\Scripts\ObjectsSwitcher.cs" />
+    <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\ParticleDirectionControllerPos.cs" />
     <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\cshFollowPollack.cs" />
     <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\ParticleDirectionController.cs" />
     <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\FloatingGhost.cs" />
@@ -83,6 +85,8 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\ObjectDetection\labels.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Hovl Studio\3D Fire and Explosions\Demo scene\Readme.txt" />
+    <None Include="Assets\Hovl Studio\HSFiles\Shaders\Distortion.shader" />
     <None Include="Assets\00.TestScenes\heeyeon\Materials\HighlightsAndShadows.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />

@@ -104,27 +104,26 @@ public class ObjectDetectionBridge : MonoBehaviour
 
         if (!_contentActive)
         {
-            if (detected == _candidate) _stableCount++;
-            else { _candidate = detected; _stableCount = 1; }
-
-            Debug.Log($"[ObjectDetectionBridge] 안정화: {_stableCount}/{stableFramesRequired} ({detected})");
-
-            if (_stableCount < stableFramesRequired) return;
-
-
+            _candidate = detected;
+            Debug.Log($"[ObjectDetectionBridge] 인식 성공 및 즉시 스폰: type={detected}");
 
             if (customSpawner != null)
             {
                 customSpawner.StartSpawn(detected);
-                Debug.Log($"[ObjectDetectionBridge] 씬 앵커 기준 스폰: type={detected}");
+                Debug.Log($"[ObjectDetectionBridge] 씬 앵커 기준 스폰 완료: type={detected}");
+            }
+            else
+            {
+                // 👇 의심 지점 3: 스포너 할당 누락 확인
+                Debug.LogError("[ObjectDetectionBridge] CustomSpawner가 인스펙터에 할당되어 있지 않습니다!");
             }
 
-            
             _contentActive = true;
         }
         else
         {
-            
+            // 👇 의심 지점 4: 이미 켜져 있는 상태일 경우
+            Debug.Log("[ObjectDetectionBridge] _contentActive가 이미 true입니다. 스폰을 건너뜁니다.");
         }
     }
 

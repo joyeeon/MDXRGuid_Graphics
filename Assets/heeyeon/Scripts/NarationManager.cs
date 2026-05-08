@@ -19,6 +19,11 @@ public class NarrationManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float secondClipDelay = 10f;  // 텍스트 표시 후 두번째 MP3까지 대기 시간
 
+    [Header("UI Settings")]
+    [SerializeField] private RectTransform canvasRect; // 이동시킬 UI 캔버스의 RectTransform
+    [SerializeField] private Vector3 textOffset = new Vector3(0, 0, 0.5f); // 프리팹 기준 어느 정도 앞에 띄울지
+
+
     private GameObject objectToActive_geobukseon;
 
     private bool _hasPlayed = false;
@@ -153,5 +158,20 @@ public class NarrationManager : MonoBehaviour
     {
         if (!audioSource.isPlaying)
             audioSource.UnPause();
+    }
+
+    public void SetTextPosition(Vector3 spawnPosition, Quaternion spawnRotation)
+    {
+        if (canvasRect == null) return;
+
+        // 프리팹 위치에서 정해진 오프셋만큼 떨어진 곳에 배치
+        // spawnRotation을 곱해주면 프리팹이 바라보는 방향의 '앞'에 배치됩니다.
+        Vector3 targetPos = spawnPosition + (spawnRotation * textOffset);
+
+        canvasRect.position = targetPos;
+
+        // 텍스트가 사용자를 바라보게 하고 싶다면 추가 (선택사항)
+        // canvasRect.LookAt(Camera.main.transform); 
+         //canvasRect.Rotate(0, 180, 0); // LookAt 사용 시 뒤집힘 방지
     }
 }

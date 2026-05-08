@@ -18,23 +18,22 @@ public class cshFollowPollack : MonoBehaviour
     private bool isPreparing = false;     // VFX 켜지고 대기 중인 상태
     public bool IsFollowing => isFollow;
 
+
     private float currentSpeed;
-    private AudioSource audioSource;
+    public AudioClip followSound;
     private Vector3 initialScale;
     private float initialDistance;
 
+    public float vfxToFollowDelay = 1.0f;
 
-    public GameObject warningVFX;        // VisualEffect → GameObject로 변경
-    public float vfxToFollowDelay = 1.5f;
+    private bool hasTriggeredVFX = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         initialScale = transform.localScale;
-        audioSource = GetComponent<AudioSource>();
-        // 시작 시 VFX 프리팹 비활성화
-        if (warningVFX != null)
-            warningVFX.gameObject.SetActive(false);
+        
+        
     }
 
     // Update is called once per frame
@@ -50,6 +49,9 @@ public class cshFollowPollack : MonoBehaviour
 
     void CheckFacingPollack()
     {
+
+        if (PollackVFXManager.Instance != null && PollackVFXManager.Instance.IsSomeoneFollowing)
+            return; // 다른 누군가가 이미 따라가는 중이라면 새로 시작하지 않음
         Vector3 toPollack = transform.position - Pollack.position;
 
         if (toPollack.magnitude > detectionDistance) return;
@@ -57,10 +59,16 @@ public class cshFollowPollack : MonoBehaviour
         float dot = Vector3.Dot(-Pollack.transform.right, toPollack.normalized);
         if (dot < facingThreshold) return;
 
-        if (warningVFX != null)
-            warningVFX.SetActive(true);
-
         isPreparing = true;
+
+        // 매니저에게 이펙트를 켜달라고 요청, 따라오기 방지 
+        if (PollackVFXManager.Instance != null)
+        {
+            PollackVFXManager.Instance.IsSomeoneFollowing = true; // 다른 오브젝트가 따라오는 중임을 알림
+            PollackVFXManager.Instance.StartVFX();
+            hasTriggeredVFX = true;
+        }
+
         StartCoroutine(PrepareFollow());
     }
 
@@ -75,8 +83,8 @@ public class cshFollowPollack : MonoBehaviour
         isPreparing = false;
         isFollow = true;
 
-        if (audioSource != null && audioSource.clip != null)
-            AudioSource.PlayClipAtPoint(audioSource.clip, transform.position, 0.5f);
+        if (followSound != null)
+            AudioSource.PlayClipAtPoint(followSound, transform.position, 0.5f);
     }
 
     void MoveTowardPollack()
@@ -108,11 +116,19 @@ public class cshFollowPollack : MonoBehaviour
     void OnArrive()
     {
         isFollow = false;
-
-        if (warningVFX != null)
-            warningVFX.SetActive(false);
-
         Destroy(gameObject);
+    }
+
+    // 오브젝트가 파괴될 때 (OnArrive로 파괴되든, 외부 요인으로 파괴되든) 이펙트 카운트 감소
+    void OnDisable()
+    {
+        // 내가 이펙트를 켠 적이 있다면 카운트를 줄임
+        if (hasTriggeredVFX && PollackVFXManager.Instance != null)
+        {
+            PollackVFXManager.Instance.StopVFX();
+            PollackVFXManager.Instance.IsSomeoneFollowing = false; // 따라오는 중이 아님을 알림
+            hasTriggeredVFX = false; // 중복 실행 방지 안전장치
+        }
     }
 
 }

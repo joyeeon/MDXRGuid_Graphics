@@ -28,7 +28,7 @@ public class CustomSpawner : MonoBehaviour
         {
             MRUK.Instance.RegisterSceneLoadedCallback(() =>
             {
-                _currentType = ContentType.Bugeo;
+                _currentType = ContentType.Geobukseon;
                 switch (SpawnOnStart)
                 {
                     case MRUK.RoomFilter.AllRooms:
@@ -96,6 +96,15 @@ public class CustomSpawner : MonoBehaviour
             Vector3 spawnPos = anchor.transform.position + Vector3.up * normalOffset;
             _spawnedInstance = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
             Debug.Log($"[CustomSpawner] 스폰 완료: {_currentType} @ {spawnPos}");
+            Debug.Log($"[CustomSpawner] anchor.transform.rotation: {anchor.transform.rotation}");
+
+            // 텍스트 위치 업데이트 추가
+            if (narrationManager != null)
+            {
+                // 생성된 위치와 회전 정보를 넘겨줍니다.
+                narrationManager.SetTextPosition(spawnPos, Quaternion.identity);
+            }
+
 
             if (_currentType == ContentType.Geobukseon)
             {
