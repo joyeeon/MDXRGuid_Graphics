@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{BC4BC164-35B2-B2E9-8226-FADCA13C1DBA}</ProjectGuid>
+    <ProjectGuid>{98294DE6-BB9A-E57F-5C6F-86BE535C0FC9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -61,7 +61,9 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.10f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\NarrationPlayer.cs" />
     <Compile Include="Assets\heeyeon\Scripts\NarationManager.cs" />
+    <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\ButtonControllerGeoBukseon.cs" />
     <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\PollackVFXManager.cs" />
     <Compile Include="Assets\Lana Studio\Environment VFX pack\Demo\Scripts\ObjectsSwitcher.cs" />
     <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\ParticleDirectionControllerPos.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Lana Studio\Environment VFX pack\Demo\Scripts\_InputKeyBoard.cs" />
     <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\InteractionSoundPlayer.cs" />
+    <Compile Include="Assets\00.TestScenes\heeyeon\Scripts\SetupRotationConstraints.cs" />
     <Compile Include="Assets\heeyeon\Scripts\CustomSpawner.cs" />
     <Compile Include="Assets\ObjectDetection\ObjectDetectionBridge.cs" />
   </ItemGroup>

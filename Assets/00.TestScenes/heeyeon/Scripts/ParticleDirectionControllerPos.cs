@@ -5,13 +5,16 @@ public class LineCrossDetector : MonoBehaviour
 {
     [SerializeField] private Transform lineObject;      // 기준이 되는 빈 객체
     [SerializeField] private Transform shipTransform;   // 배
-    [SerializeField] private GameObject vfxPrefab;      // VFX 프리팹
+    //[SerializeField] private GameObject vfxPrefab;      // VFX 프리팹
     [SerializeField] private float vfxDuration = 3.0f; // VFX 지속 시간
+
 
     public List<GameObject> Characters;
 
     private bool changed = false;
     private float previousLocalX;
+
+    [SerializeField] private ButtonControllerGeoBukseon buttonController;
 
     private void Start()
     {
@@ -28,7 +31,7 @@ public class LineCrossDetector : MonoBehaviour
 
         bool crossed = previousLocalX > 0f && currentLocalX <= 0f;
 
-        if (crossed)
+        if (crossed && buttonController.currentStep > 1)
         {
             ExecuteOneShotEffects();
             changed = true;
@@ -46,20 +49,22 @@ public class LineCrossDetector : MonoBehaviour
 
     private void ExecuteOneShotEffects()
     {
-        if (Characters != null && Characters.Count >= 2)
+        if (buttonController.currentStep <= 1) return;
+        if (Characters != null && Characters.Count >= 2 )
         {
             Characters[0].SetActive(false);
             Characters[1].SetActive(true);
         }
+        buttonController.OnButton3Clicked();
 
-        if (vfxPrefab != null)
-            vfxPrefab.SetActive(true);
+       /* if (vfxPrefab != null)
+            vfxPrefab.SetActive(true);*/
     }
 
-    private System.Collections.IEnumerator DisableAfterDelay(float delay)
+    /*private System.Collections.IEnumerator DisableAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         if (vfxPrefab != null)
             vfxPrefab.SetActive(false);
-    }
+    }*/
 }

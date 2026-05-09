@@ -91,12 +91,13 @@ public class NarrationManager : MonoBehaviour
         switch (type)
         {
             case ContentType.Geobukseon:
-                if (geobukseonClip01 != null)
+                /*if (geobukseonClip01 != null)
                 {
                     audioSource.clip = geobukseonClip01;
                     audioSource.Play();
                     _waitingForGeobukseonEnd = true;
-                }
+                }*/
+                ShowText(geobukseonMessage);
                 break;
 
             case ContentType.Bugeo:
